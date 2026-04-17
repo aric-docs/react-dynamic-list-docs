@@ -9,8 +9,8 @@ order: 1
 
 ```
 ┌─────────────┐     ┌──────────┐     ┌──────────┐
-│ DynamicList  │────▶│  Store   │◀────│ useList  │
-│ (component)  │     │ (global) │     │ Context  │
+│ DynamicList  │────▶│  Store   │◀────│useCommand│
+│ (component)  │     │ (global) │     │  (hook)  │
 └─────────────┘     └────┬─────┘     └──────────┘
                          │
                     ┌────▼─────┐
@@ -38,17 +38,16 @@ Name-keyed pub/sub system for reactive cross-component propagation:
 - `subscribe(name, listener)` — Subscribe to changes, returns unsubscribe function
 - `emitChange(name, action, index?)` — Emit a change event
 
-### useListContext (`use-list-context.ts`)
+### useCommand (`use-command.ts`)
 
-React hook that bridges the store/events with React state via `useState`. Returns a `ListApi<T>` with:
+React hook that bridges the store/events with React state via `useState`. Returns `{ state, actions }`:
 
-- `list` / `change` — Current state
-- `add` / `remove` / `update` / `reset` — Mutations
-- `canAdd` / `canRemove` — Constraint flags
+- **state**: `list`, `change`, `canAdd`, `canRemove` — reactive data
+- **actions**: `add`, `remove`, `update`, `reset` — imperative methods
 
 ### DynamicList (`dynamic-list.tsx`)
 
-Declarative wrapper combining `useListContext` + `@jswork/react-list` for slot-based rendering.
+Declarative wrapper combining `useCommand` + `@jswork/react-list` for slot-based rendering.
 
 ## Data Flow
 
@@ -67,6 +66,25 @@ interface ChangeEvent<T> {
   action: ListAction;
   data: T[]; // full list after mutation
   index?: number; // affected index (undefined for reset)
+}
+
+interface ListState<T> {
+  list: T[];
+  change: ChangeEvent<T> | null;
+  canAdd: boolean;
+  canRemove: boolean;
+}
+
+interface ListActions<T> {
+  add: () => void;
+  remove: (index: number) => void;
+  update: (index: number, updater: (prev: T) => T) => void;
+  reset: (items: T[]) => void;
+}
+
+interface ListApi<T> {
+  state: ListState<T>;
+  actions: ListActions<T>;
 }
 ```
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DynamicList, useListContext } from '@jswork/react-dynamic-list';
+import { DynamicList, useCommand } from '@jswork/react-dynamic-list';
 
 interface Item {
   id: string;
@@ -9,7 +9,8 @@ interface Item {
 const defaults = (): Item => ({ id: crypto.randomUUID(), label: '' });
 
 const ItemSlot = ({ item, index }) => {
-  const { remove, update } = useListContext<Item>('demo-constraints');
+  const { actions } = useCommand<Item>('demo-constraints');
+  const { remove, update } = actions;
   return (
     <div className="flex items-center gap-2 p-2 bg-gray-50 rounded">
       <input
@@ -24,7 +25,9 @@ const ItemSlot = ({ item, index }) => {
 };
 
 const Controls = () => {
-  const { add, canAdd, canRemove, list } = useListContext<Item>('demo-constraints', { defaults, min: 1, max: 4 });
+  const { state, actions } = useCommand<Item>('demo-constraints', { defaults, min: 1, max: 4 });
+  const { add } = actions;
+  const { canAdd, canRemove, list } = state;
   return (
     <div className="flex items-center gap-3 mb-3">
       <button onClick={add} disabled={!canAdd} className="px-3 py-1 bg-blue-500 text-white rounded text-sm disabled:opacity-40">

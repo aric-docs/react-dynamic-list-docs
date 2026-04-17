@@ -24,7 +24,7 @@ export default defineConfig({
         title: 'Components',
         children: [
           { title: 'DynamicList', link: '/components/dynamic-list' },
-          { title: 'useListContext', link: '/components/use-list-context' },
+          { title: 'useCommand', link: '/components/use-command' },
           { title: 'Store & Events', link: '/components/store-utilities' },
         ],
       },

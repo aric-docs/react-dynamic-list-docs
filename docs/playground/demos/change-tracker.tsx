@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DynamicList, useListContext } from '@jswork/react-dynamic-list';
+import { DynamicList, useCommand } from '@jswork/react-dynamic-list';
 import type { ChangeEvent } from '@jswork/react-dynamic-list';
 
 interface Task {
@@ -18,7 +18,8 @@ const priorityColor: Record<Task['priority'], string> = {
 const defaults = (): Task => ({ id: crypto.randomUUID(), title: '', priority: 'mid' });
 
 const TaskItem = ({ item, index }: any) => {
-  const { update, remove } = useListContext<Task>('pg-tracker');
+  const { actions } = useCommand<Task>('pg-tracker');
+  const { update, remove } = actions;
   const cycle = () => {
     const next = priorities[(priorities.indexOf(item.priority) + 1) % 3];
     update(index, (prev) => ({ ...prev, priority: next }));
@@ -46,7 +47,9 @@ const initialData = [
 ];
 
 export default () => {
-  const { add, canAdd, list } = useListContext<Task>('pg-tracker', { defaults, max: 8 });
+  const { state, actions } = useCommand<Task>('pg-tracker', { defaults, max: 8 });
+  const { add } = actions;
+  const { canAdd, list } = state;
   const [log, setLog] = useState<string[]>([]);
 
   const handleChange = (e: ChangeEvent<Task>) => {

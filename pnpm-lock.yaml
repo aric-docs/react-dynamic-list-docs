@@ -18,8 +18,8 @@ importers:
         specifier: ^1.2.37
         version: 1.2.37
       '@jswork/react-dynamic-list':
-        specifier: ^1.0.3
-        version: 1.0.3(@jswork/react-list@2.0.9)(classnames@2.5.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^1.0.4
+        version: 1.0.4(@jswork/react-list@2.0.9)(classnames@2.5.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@jswork/react-list':
         specifier: ^2.0.9
         version: 2.0.9
@@ -1478,8 +1478,8 @@ packages:
   '@jswork/presets-tailwind@1.2.37':
     resolution: {integrity: sha512-DQ+39NkekCaJok+bnlrWlWKVW6o+qVPXM5pKY9d6A1YRvmAfTzsT7SCeu+P5a4SRJ6+aSQtC77aqQMbw9WJHrw==}
 
-  '@jswork/react-dynamic-list@1.0.3':
-    resolution: {integrity: sha512-r+tc6j3hopXl5lp4SRDyqciXrOPGOEV8Mz27SFhoRihqBTTIzye+1IdfYnSwc7D+lb2pj4s/TT774SSLaAsYVg==}
+  '@jswork/react-dynamic-list@1.0.4':
+    resolution: {integrity: sha512-008D9HRnnB2AsFDjmx2XLoIi0J1Zgd2iPoyqFK4S7rseX1PJZU3K0SCFGDq96pxcfOls3LqhC11WhEtgcs9WhQ==}
     peerDependencies:
       '@jswork/react-list': '*'
       classnames: '*'
@@ -10355,7 +10355,7 @@ snapshots:
       '@jswork/tailwind-shortcuts': 1.0.38
       '@jswork/tailwind-width': 1.0.7
 
-  '@jswork/react-dynamic-list@1.0.3(@jswork/react-list@2.0.9)(classnames@2.5.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@jswork/react-dynamic-list@1.0.4(@jswork/react-list@2.0.9)(classnames@2.5.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@jswork/react-list': 2.0.9
       classnames: 2.5.1

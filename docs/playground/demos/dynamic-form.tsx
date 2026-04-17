@@ -1,5 +1,5 @@
 import React from 'react';
-import { DynamicList, useListContext } from '@jswork/react-dynamic-list';
+import { DynamicList, useCommand } from '@jswork/react-dynamic-list';
 
 interface Field {
   id: string;
@@ -10,7 +10,8 @@ interface Field {
 const defaults = (): Field => ({ id: crypto.randomUUID(), name: '', value: '' });
 
 const FieldItem = ({ item, index }: any) => {
-  const { update, remove } = useListContext<Field>('pg-form');
+  const { actions } = useCommand<Field>('pg-form');
+  const { update, remove } = actions;
   return (
     <div className="flex items-center gap-2 p-2 bg-gray-50 rounded">
       <input
@@ -37,7 +38,9 @@ const initialData = [
 ];
 
 export default () => {
-  const { add, canAdd, list, reset } = useListContext<Field>('pg-form', { defaults, max: 8 });
+  const { state, actions } = useCommand<Field>('pg-form', { defaults, max: 8 });
+  const { add, reset } = actions;
+  const { canAdd, list } = state;
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-2">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DynamicList, useListContext } from '@jswork/react-dynamic-list';
+import { DynamicList, useCommand } from '@jswork/react-dynamic-list';
 
 interface Item {
   id: string;
@@ -9,7 +9,8 @@ interface Item {
 const defaults = (): Item => ({ id: crypto.randomUUID(), label: '' });
 
 const ItemSlot = ({ item, index }) => {
-  const { remove, update } = useListContext<Item>('pg-constraints');
+  const { actions } = useCommand<Item>('pg-constraints');
+  const { remove, update } = actions;
   return (
     <div className="flex items-center gap-2 p-2 bg-gray-50 rounded">
       <span className="text-gray-400 text-xs w-6">#{index + 1}</span>
@@ -25,7 +26,9 @@ const ItemSlot = ({ item, index }) => {
 };
 
 const Controls = () => {
-  const { add, canAdd, canRemove, list } = useListContext<Item>('pg-constraints', { defaults, min: 1, max: 4 });
+  const { state, actions } = useCommand<Item>('pg-constraints', { defaults, min: 1, max: 4 });
+  const { add } = actions;
+  const { canAdd, canRemove, list } = state;
   return (
     <div className="space-y-2 mb-3">
       <div className="flex gap-2">

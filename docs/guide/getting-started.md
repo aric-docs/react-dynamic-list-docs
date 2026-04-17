@@ -48,19 +48,18 @@ const defaults = (): Item => ({
 />;
 ```
 
-### Imperative with `useListContext`
+### Imperative with `useCommand`
 
 ```tsx
-import { useListContext } from '@jswork/react-dynamic-list';
+import { useCommand } from '@jswork/react-dynamic-list';
 
 function MyControls() {
-  const { add, remove, list, canAdd, canRemove } = useListContext<Item>(
-    'my-list',
-    {
-      max: 5,
-      defaults: () => ({ id: crypto.randomUUID(), title: '', done: false }),
-    },
-  );
+  const { state, actions } = useCommand<Item>('my-list', {
+    max: 5,
+    defaults: () => ({ id: crypto.randomUUID(), title: '', done: false }),
+  });
+  const { list, canAdd, canRemove } = state;
+  const { add, remove } = actions;
 
   return (
     <>
@@ -86,5 +85,5 @@ function MyControls() {
 
 - [Architecture](/guide/architecture) - Understand the internal design
 - [DynamicList API](/components/dynamic-list) - Full component reference
-- [useListContext API](/components/use-list-context) - Hook reference
+- [useCommand API](/components/use-command) - Hook reference
 - [Playground](/playground) - Interactive examples

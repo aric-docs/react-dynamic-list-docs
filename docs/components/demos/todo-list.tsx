@@ -1,5 +1,5 @@
 import React from 'react';
-import { DynamicList, useListContext } from '@jswork/react-dynamic-list';
+import { DynamicList, useCommand } from '@jswork/react-dynamic-list';
 
 interface Todo {
   id: string;
@@ -10,7 +10,8 @@ interface Todo {
 const defaults = (): Todo => ({ id: crypto.randomUUID(), title: '', done: false });
 
 const TodoItem = ({ item, index, onAction }) => {
-  const { update, remove } = useListContext<Todo>('demo-todo');
+  const { actions } = useCommand<Todo>('demo-todo');
+  const { update, remove } = actions;
   return (
     <div className="flex items-center gap-2 p-2 bg-gray-50 rounded">
       <input
@@ -31,7 +32,9 @@ const TodoItem = ({ item, index, onAction }) => {
 };
 
 const Controls = () => {
-  const { add, canAdd, canRemove, list } = useListContext<Todo>('demo-todo', { defaults, max: 5 });
+  const { state, actions } = useCommand<Todo>('demo-todo', { defaults, max: 5 });
+  const { add } = actions;
+  const { canAdd, canRemove, list } = state;
   return (
     <div className="flex gap-2 mb-3">
       <button onClick={add} disabled={!canAdd} className="px-3 py-1 bg-blue-500 text-white rounded text-sm disabled:opacity-40">

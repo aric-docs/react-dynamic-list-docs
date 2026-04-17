@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DynamicList, useListContext, addToList } from '@jswork/react-dynamic-list';
+import { DynamicList, useCommand, addToList } from '@jswork/react-dynamic-list';
 
 interface Tag {
   id: string;
@@ -9,7 +9,8 @@ interface Tag {
 const defaults = (): Tag => ({ id: crypto.randomUUID(), text: '' });
 
 const TagItem = ({ item, index }: any) => {
-  const { remove } = useListContext<Tag>('pg-tags');
+  const { actions } = useCommand<Tag>('pg-tags');
+  const { remove } = actions;
   return (
     <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
       {item.text}
@@ -19,7 +20,8 @@ const TagItem = ({ item, index }: any) => {
 };
 
 export default () => {
-  const { list } = useListContext<Tag>('pg-tags', { defaults, max: 10 });
+  const { state } = useCommand<Tag>('pg-tags', { defaults, max: 10 });
+  const { list } = state;
   const [input, setInput] = useState('');
 
   const handleAdd = () => {

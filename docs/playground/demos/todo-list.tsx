@@ -1,5 +1,5 @@
 import React from 'react';
-import { DynamicList, useListContext } from '@jswork/react-dynamic-list';
+import { DynamicList, useCommand } from '@jswork/react-dynamic-list';
 
 interface Todo {
   id: string;
@@ -14,7 +14,8 @@ const defaults = (): Todo => ({
 });
 
 const TodoItem = ({ item, index }: any) => {
-  const { update, remove } = useListContext<Todo>('pg-todo');
+  const { actions } = useCommand<Todo>('pg-todo');
+  const { update, remove } = actions;
   return (
     <div
       className={`flex items-center gap-2 p-2 rounded ${
@@ -52,10 +53,12 @@ const TodoItem = ({ item, index }: any) => {
 };
 
 const Controls = () => {
-  const { add, canAdd, list } = useListContext<Todo>('pg-todo', {
+  const { state, actions } = useCommand<Todo>('pg-todo', {
     defaults,
     max: 8,
   });
+  const { add } = actions;
+  const { canAdd, list } = state;
   const remaining = list.filter((t) => !t.done).length;
   return (
     <div className="flex items-center gap-3 mb-3">

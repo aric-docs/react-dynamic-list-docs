@@ -15,6 +15,6 @@ Welcome to React Dynamic List — a React component for managing dynamic lists w
 ## Quick Links
 
 - [DynamicList Component](/components/dynamic-list)
-- [useListContext Hook](/components/use-list-context)
+- [useCommand Hook](/components/use-command)
 - [Store & Event Utilities](/components/store-utilities)
 - [Playground](/playground)

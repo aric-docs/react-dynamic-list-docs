@@ -1,5 +1,5 @@
 import React from 'react';
-import { DynamicList, useListContext } from '@jswork/react-dynamic-list';
+import { DynamicList, useCommand } from '@jswork/react-dynamic-list';
 
 const fruits = ['🍎 Apple', '🍐 Pear', '🍌 Banana', '🍇 Grape', '🍊 Orange'];
 let fruitIdx = 0;
@@ -10,7 +10,8 @@ const defaults = (): { id: string; value: string } => ({
 });
 
 const FruitItem = ({ item, index }: any) => {
-  const { remove } = useListContext('pg-string');
+  const { actions } = useCommand('pg-string');
+  const { remove } = actions;
   return (
     <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
       <span>{item.value}</span>
@@ -20,7 +21,9 @@ const FruitItem = ({ item, index }: any) => {
 };
 
 export default () => {
-  const { add, canAdd, canRemove, list, reset } = useListContext<{ id: string; value: string }>('pg-string', { defaults, max: 8 });
+  const { state, actions } = useCommand<{ id: string; value: string }>('pg-string', { defaults, max: 8 });
+  const { add, reset } = actions;
+  const { canAdd, list } = state;
   return (
     <div className="space-y-2">
       <div className="flex gap-2">

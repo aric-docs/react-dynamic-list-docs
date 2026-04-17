@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   DynamicList,
-  useListContext,
+  useCommand,
   type ItemContext,
 } from '@jswork/react-dynamic-list';
 
@@ -13,7 +13,8 @@ interface Item {
 const defaults = (): Item => ({ id: crypto.randomUUID(), label: '' });
 
 const ItemSlot = ({ item, index }: ItemContext<Item>) => {
-  const { remove, update } = useListContext<Item>('pg-shared');
+  const { actions } = useCommand<Item>('pg-shared');
+  const { remove, update } = actions;
   return (
     <div className="flex items-center gap-2 p-2 bg-gray-50 rounded">
       <input
@@ -35,10 +36,12 @@ const ItemSlot = ({ item, index }: ItemContext<Item>) => {
 };
 
 const PanelA = () => {
-  const { add, canAdd, list } = useListContext<Item>('pg-shared', {
+  const { state, actions } = useCommand<Item>('pg-shared', {
     defaults,
     max: 6,
   });
+  const { add } = actions;
+  const { canAdd, list } = state;
   return (
     <div className="border rounded p-3">
       <div className="font-bold text-sm mb-2 text-blue-600">
@@ -72,7 +75,8 @@ const PanelA = () => {
 };
 
 const PanelB = () => {
-  const { list } = useListContext<Item>('pg-shared', { defaults });
+  const { state } = useCommand<Item>('pg-shared', { defaults });
+  const { list } = state;
   return (
     <div className="border rounded p-3">
       <div className="font-bold text-sm mb-2 text-green-600">
