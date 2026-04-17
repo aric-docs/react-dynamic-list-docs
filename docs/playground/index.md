@@ -5,21 +5,20 @@ order: 1
 
 # Playground
 
-Welcome to the interactive playground! Here you can explore live demos with real-time editing capabilities.
+Interactive demos for React Dynamic List. All examples use Tailwind CSS for styling.
 
-## Features
+## Basic List
 
-- **Live Editing** - Edit code and see changes immediately
-- **Interactive Demos** - All examples are runnable and editable
-- **Type-Safe** - Full TypeScript support
-- **Best Practices** - Examples following industry standards
+<code src="./demos/basic.tsx">Basic add/remove list</code>
 
-## Demo Example
+## Todo List
 
-Here's a simple interactive counter example to get started:
+<code src="./demos/todo-list.tsx">Todo list with inline editing</code>
 
-<code src="./demos/counter.tsx">Interactive Counter</code>
+## Constraints (min/max)
 
-## Getting Started
+<code src="./demos/constraints.tsx">min/max constraints</code>
 
-You can create your own playground examples by creating markdown files in the `playground` directory. Use the code block syntax with `tsx` or `jsx` language to create interactive demos.
+## Shared State
+
+<code src="./demos/shared-state.tsx">Two components sharing the same list</code>

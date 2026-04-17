@@ -5,122 +5,86 @@ order: 0
 
 # Getting Started
 
-Dumi Docs Template is a starting point for building documentation sites with dumi. This template comes with pre-configured tooling and best practices.
-
 ## Prerequisites
 
-- Node.js >= 22 (use [.nvmrc](/.nvmrc) with nvm)
-- npm, yarn, or pnpm
+- React >= 18
+- `@jswork/react-list` as a peer dependency
 
 ## Installation
 
-### Clone the Template
-
 ```bash
-git clone https://github.com/afeiship/react-dynamic-list-docs.git
-cd react-dynamic-list-docs
+npm install @jswork/react-dynamic-list @jswork/react-list
 ```
 
-### Install Dependencies
+## Basic Usage
 
-```bash
-# npm
-npm install
+### Declarative with `<DynamicList>`
 
-# yarn
-yarn install
+```tsx
+import { DynamicList } from '@jswork/react-dynamic-list';
 
-# pnpm
-pnpm install
-```
+interface Item {
+  id: string;
+  title: string;
+  done: boolean;
+}
 
-## Development
-
-### Start Dev Server
-
-```bash
-npm run dev
-```
-
-The documentation site will be available at `http://localhost:8000`
-
-### Directory Structure
-
-```
-react-dynamic-list-docs
-├── .dumirc.ts          # Dumi configuration
-├── docs                # Documentation files
-│   ├── index.md       # Home page
-│   ├── guide          # Guide section
-│   └── components     # Component documentation
-├── public             # Static assets
-│   └── logo.png       # Site logo
-└── workbox-config.cjs # PWA configuration
-```
-
-## Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run start` - Alias for `npm run dev`
-
-## Configuration
-
-The main configuration is in [`.dumirc.ts`](/.dumirc.ts):
-
-```ts
-import { defineConfig } from 'dumi';
-
-export default defineConfig({
-  base: '/react-dynamic-list-docs/',           // Base path for deployment
-  publicPath: '/react-dynamic-list-docs/',     // Public path for assets
-  logo: '/react-dynamic-list-docs/logo.png',   // Site logo
-  locales: [{ id: 'en-US', name: 'English' }],
-  themeConfig: {
-    name: 'Dumi Docs',           // Site name
-    description: 'A dumi documentation template project.',
-    nav: [...],                  // Navigation
-    socialLinks: {
-      github: 'https://github.com/afeiship/react-dynamic-list-docs',
-    },
-  },
+const defaults = (): Item => ({
+  id: crypto.randomUUID(),
+  title: '',
+  done: false,
 });
+
+<DynamicList<Item>
+  name="my-list"
+  defaults={defaults}
+  data={[{ id: '1', title: 'Hello', done: false }]}
+  max={10}
+  onChange={(e) => console.log(e.action, e.index, e.data)}
+  slots={{
+    item: ({ item, index }) => <div>{item.title}</div>,
+    empty: () => <div>No items</div>,
+  }}
+/>;
 ```
 
-## Adding Content
+### Imperative with `useListContext`
 
-### Creating Pages
+```tsx
+import { useListContext } from '@jswork/react-dynamic-list';
 
-Create markdown files in the `docs` directory:
+function MyControls() {
+  const { add, remove, list, canAdd, canRemove } = useListContext<Item>(
+    'my-list',
+    {
+      max: 5,
+      defaults: () => ({ id: crypto.randomUUID(), title: '', done: false }),
+    },
+  );
 
-```markdown
----
-title: My Page
-order: 1
----
-
-# My Page Content
-
-Write your documentation here.
+  return (
+    <>
+      <button disabled={!canAdd} onClick={add}>
+        Add
+      </button>
+      <button disabled={!canRemove} onClick={() => remove(list.length - 1)}>
+        Remove Last
+      </button>
+    </>
+  );
+}
 ```
 
-### Organizing Sections
+## Key Concepts
 
-Create subdirectories to organize your documentation:
-
-```
-docs/
-├── guide/
-│   ├── getting-started.md
-│   ├── configuration.md
-│   └── deployment.md
-└── components/
-    ├── index.md
-    └── button.md
-```
+- **`name`** — Shared-state key. All hooks/components with the same `name` see the same list.
+- **`defaults`** — Factory function `() => T` for creating new items. Required in both `<DynamicList>` and `useListContext`.
+- **`slots`** — Customize rendering with `item` and `empty` slot components.
+- **`min`/`max`** — Soft constraints. `canAdd` is `false` when length >= `max`, `canRemove` is `false` when length <= `min`.
 
 ## Next Steps
 
-- [Configuration](/guide/configuration) - Customize your documentation site
-- [Deployment](/guide/deployment) - Deploy your documentation site
+- [Architecture](/guide/architecture) - Understand the internal design
+- [DynamicList API](/components/dynamic-list) - Full component reference
+- [useListContext API](/components/use-list-context) - Hook reference
+- [Playground](/playground) - Interactive examples

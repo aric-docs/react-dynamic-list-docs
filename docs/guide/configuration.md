@@ -1,127 +1,61 @@
 ---
 title: Configuration
-order: 1
+order: 2
 ---
 
 # Configuration
-
-Learn how to customize your dumi documentation site.
 
 ## Dumi Configuration
 
 The main configuration file is `.dumirc.ts` in the project root.
 
-### Basic Configuration
-
-```typescript
+```ts
 import { defineConfig } from 'dumi';
 
 export default defineConfig({
-  // Site base path (useful for GitHub Pages)
   base: '/react-dynamic-list-docs/',
-
-  // Public path for assets
   publicPath: '/react-dynamic-list-docs/',
-
-  // Site logo
   logo: '/react-dynamic-list-docs/logo.png',
-
-  // Locales / languages
   locales: [{ id: 'en-US', name: 'English' }],
-
-  // Resolve configuration
   resolve: {
-    codeBlockMode: 'passive', // 'passive' | 'active'
+    codeBlockMode: 'passive',
   },
-
-  // Theme configuration
   themeConfig: {
-    name: 'Your Site Name',
-    description: 'Your site description',
+    name: 'react-dynamic-list',
+    description: 'react-dynamic-list docs.',
     nav: [
-      {
-        title: 'Guide',
-        link: '/guide/getting-started.md',
-      },
+      { title: 'Guide', link: '/guide/getting-started' },
+      { title: 'Components', children: [...] },
+      { title: 'Playground', link: '/playground' },
     ],
-    nprogress: true,
     socialLinks: {
-      github: 'https://github.com/your-username/your-repo',
+      github: 'https://github.com/aric-tpls/react-dynamic-list-docs',
     },
   },
-
-  // Custom styles
-  styles: [`/* Your custom CSS here */`],
+  plugins: ['@umijs/plugins/dist/tailwindcss'],
+  tailwindcss: {},
 });
 ```
 
-## Navigation
-
-Configure the navigation menu in `themeConfig.nav`:
-
-```typescript
-nav: [
-  {
-    title: 'Guide',           // Nav item title
-    link: '/guide/index',     // Link to page
-  },
-  {
-    title: 'Components',
-    link: '/components/index',
-  },
-  {
-    title: 'External',
-    link: 'https://example.com', // External links work too
-  },
-],
-```
-
-## Sidebar
-
-Dumi automatically generates sidebars based on your file structure:
+## Directory Structure
 
 ```
 docs/
+├── index.md                          # Homepage
 ├── guide/
-│   ├── getting-started.md    # /guide/getting-started
-│   └── configuration.md      # /guide/configuration
-└── components/
-    └── index.md              # /components/index
+│   ├── getting-started.md            # Installation & Quick Start
+│   └── architecture.md               # Architecture overview
+├── components/
+│   ├── dynamic-list.md               # DynamicList component
+│   ├── use-list-context.md           # useListContext hook
+│   └── store-utilities.md            # Store & Event utilities
+└── playground/
+    ├── index.md                      # Interactive demos
+    └── demos/
+        ├── basic.tsx
+        ├── todo-list.tsx
+        └── constraints.tsx
 ```
-
-## Custom Styles
-
-Add custom styles in the `styles` option:
-
-```typescript
-styles: [
-  `
-  .dumi-default-sidebar {
-    --dumi-sidebar-width: 320px;
-  }
-  `,
-],
-```
-
-## Code Blocks
-
-Configure code block behavior:
-
-```typescript
-resolve: {
-  // 'active' - shows React Playground for React code
-  // 'passive' - plain code blocks
-  codeBlockMode: 'passive',
-},
-```
-
-## Modes
-
-Dumi supports different modes:
-
-- **Doc Mode** - Standard documentation pages
-- **Demo Mode** - Component demos with live preview
-- **Site Mode** - General-purpose website
 
 ## More Configuration Options
 

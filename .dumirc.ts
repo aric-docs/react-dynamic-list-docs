@@ -22,7 +22,11 @@ export default defineConfig({
       },
       {
         title: 'Components',
-        link: '/components',
+        children: [
+          { title: 'DynamicList', link: '/components/dynamic-list' },
+          { title: 'useListContext', link: '/components/use-list-context' },
+          { title: 'Store & Events', link: '/components/store-utilities' },
+        ],
       },
       {
         title: 'Playground',

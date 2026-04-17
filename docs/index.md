@@ -1,73 +1,66 @@
 ---
-title: Dumi Docs Template
+title: React Dynamic List
 hero:
-  title: Dumi Docs Template
-  description: A template project for building documentation sites with dumi.
+  title: React Dynamic List
+  description: A React component for managing dynamic lists with shared state, event-driven updates, and slot-based rendering.
   actions:
     - text: Get Started
       link: /guide/getting-started
+    - text: Components
+      link: /components/dynamic-list
     - text: GitHub
-      link: https://github.com/afeiship/react-dynamic-list-docs
+      link: https://github.com/aric-tpls/react-dynamic-list-docs
 features:
-  - title: Dumi Powered
-    emoji: 📖
-    description: Built with dumi, a excellent doc tool for component library developers
-  - title: PWA Ready
-    emoji: 🚀
-    description: Out-of-the-box PWA support with workbox for better performance
-  - title: Type-Safe
+  - title: Global Store
+    emoji: 🗂️
+    description: List data lives outside React, shared across components by name
+  - title: Event-Driven
+    emoji: 📡
+    description: Pub/sub system propagates changes to all subscribers
+  - title: Slot-Based Rendering
+    emoji: 🧩
+    description: Customize item and empty states via slots
+  - title: Constraints
     emoji: 🔒
-    description: Full TypeScript support with comprehensive type definitions
-  - title: Modern Tooling
-    emoji: 🛠️
-    description: Pre-configured with husky, commitlint, lint-staged, and prettier
-  - title: Easy to Deploy
+    description: min/max bounds with canAdd/canRemove flags
+  - title: Change Tracking
+    emoji: 📊
+    description: Every mutation emits a ChangeEvent with action, data, and index
+  - title: SSR Safe
     emoji: 🌐
-    description: Build static sites ready for GitHub Pages, Netlify, or Vercel
-  - title: Customizable
-    emoji: 🎨
-    description: Flexible theme configuration with sidebar, navigation, and social links
+    description: Works with server-side rendering, no window dependency
 ---
 
 ## Installation
 
 ```bash
-# Clone this template
-git clone https://github.com/afeiship/react-dynamic-list-docs.git
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
+npm install @jswork/react-dynamic-list @jswork/react-list
 ```
 
 ## Quick Start
 
-```bash
-# Start development server
-npm run dev
+```tsx
+import { DynamicList } from '@jswork/react-dynamic-list';
 
-# Build for production
-npm run build
+interface Todo {
+  id: string;
+  title: string;
+  done: boolean;
+}
 
-# Preview production build
-npm run preview
-```
+const defaults = (): Todo => ({
+  id: crypto.randomUUID(),
+  title: '',
+  done: false,
+});
 
-## Tailwind Demo
-
-<div class="debug x-5 p-2 hover:debug-blue rounded bg-slate-100">
-  <button class="bg-blue-500 text-white px-4 py-2 rounded-md">Get Started</button>
-  <button class="bg-red-200 px-4 py-2 rounded-md">Show Demo</button>
-</div>
-
-## Documentation
-
-- [Guide](/guide/getting-started) - Get started with the template
-- [Configuration](/guide/configuration) - Customize your documentation site
-- [Deployment](/guide/deployment) - Deploy your documentation site
-
-```
-
+<DynamicList<Todo>
+  name="todos"
+  defaults={defaults}
+  data={[{ id: '1', title: 'Hello', done: false }]}
+  slots={{
+    item: ({ item }) => <div>{item.title}</div>,
+    empty: () => <div>No items</div>,
+  }}
+/>;
 ```
