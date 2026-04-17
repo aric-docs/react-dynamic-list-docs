@@ -17,11 +17,13 @@ const SlotItem = ({ item, index, onAction }) => (
 
 const SlotEmpty = () => <div className="text-gray-400 text-center p-4">No items yet</div>;
 
+const initialData = [{ id: '1', label: 'Item A' }, { id: '2', label: 'Item B' }];
+
 export default () => (
   <DynamicList<Item>
     name="demo-basic"
     defaults={defaults}
-    data={[{ id: '1', label: 'Item A' }, { id: '2', label: 'Item B' }]}
+    data={initialData}
     slots={{ item: SlotItem, empty: SlotEmpty }}
     onChange={(e) => console.log(e.action, e.data)}
   />

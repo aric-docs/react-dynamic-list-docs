@@ -41,13 +41,15 @@ const Controls = () => {
   );
 };
 
+const initialData = [{ id: '1', title: 'Learn React', done: false }];
+
 export default () => (
   <div>
     <Controls />
     <DynamicList<Todo>
       name="demo-todo"
       defaults={defaults}
-      data={[{ id: '1', title: 'Learn React', done: false }]}
+      data={initialData}
       max={5}
       slots={{
         item: TodoItem,

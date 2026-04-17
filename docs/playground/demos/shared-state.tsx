@@ -37,7 +37,6 @@ const PanelA = () => {
       <DynamicList<Item>
         name="pg-shared"
         defaults={defaults}
-        data={[{ id: '1', label: 'Shared item 1' }]}
         max={6}
         slots={{ item: ItemSlot, empty: () => <div className="text-gray-400 text-sm text-center p-2">Empty</div> }}
       />
