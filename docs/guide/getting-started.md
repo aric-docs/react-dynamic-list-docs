@@ -77,7 +77,7 @@ function MyControls() {
 ## Key Concepts
 
 - **`name`** — Shared-state key. All hooks/components with the same `name` see the same list.
-- **`defaults`** — Factory function `() => T` for creating new items. Required in both `<DynamicList>` and `useListContext`.
+- **`defaults`** — Factory function `() => T` for creating new items. Required in both `<DynamicList>` and `useCommand`.
 - **`slots`** — Customize rendering with `item` and `empty` slot components.
 - **`min`/`max`** — Soft constraints. `canAdd` is `false` when length >= `max`, `canRemove` is `false` when length <= `min`.
 

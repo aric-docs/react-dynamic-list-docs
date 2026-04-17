@@ -11,24 +11,15 @@ hero:
     - text: GitHub
       link: https://github.com/aric-tpls/react-dynamic-list-docs
 features:
-  - title: Global Store
+  - title: Shared Store
     emoji: 🗂️
-    description: List data lives outside React, shared across components by name
-  - title: Event-Driven
-    emoji: 📡
-    description: Pub/sub system propagates changes to all subscribers
-  - title: Slot-Based Rendering
+    description: Global store shared across components by name, event-driven updates
+  - title: Slot-Based
     emoji: 🧩
-    description: Customize item and empty states via slots
-  - title: Constraints
-    emoji: 🔒
-    description: min/max bounds with canAdd/canRemove flags
-  - title: Change Tracking
-    emoji: 📊
-    description: Every mutation emits a ChangeEvent with action, data, and index
+    description: Customize item and empty states via slots, min/max constraints
   - title: SSR Safe
     emoji: 🌐
-    description: Works with server-side rendering, no window dependency
+    description: No window dependency, works with server-side rendering
 ---
 
 ## Installation
@@ -40,7 +31,7 @@ npm install @jswork/react-dynamic-list @jswork/react-list
 ## Quick Start
 
 ```tsx
-import { DynamicList } from '@jswork/react-dynamic-list';
+import { DynamicList, useCommand } from '@jswork/react-dynamic-list';
 
 interface Todo {
   id: string;
@@ -54,6 +45,7 @@ const defaults = (): Todo => ({
   done: false,
 });
 
+// Declarative
 <DynamicList<Todo>
   name="todos"
   defaults={defaults}
@@ -63,4 +55,22 @@ const defaults = (): Todo => ({
     empty: () => <div>No items</div>,
   }}
 />;
+
+// Imperative
+function Controls() {
+  const { state, actions } = useCommand<Todo>('todos', { defaults, max: 5 });
+  return (
+    <>
+      <button disabled={!state.canAdd} onClick={actions.add}>
+        Add
+      </button>
+      <button
+        disabled={!state.canRemove}
+        onClick={() => actions.remove(state.list.length - 1)}
+      >
+        Remove Last
+      </button>
+    </>
+  );
+}
 ```
