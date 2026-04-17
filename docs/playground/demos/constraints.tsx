@@ -45,13 +45,15 @@ const Controls = () => {
   );
 };
 
+const initialData = [{ id: '1', label: 'First item' }];
+
 export default () => (
   <div>
     <Controls />
     <DynamicList<Item>
       name="pg-constraints"
       defaults={defaults}
-      data={[{ id: '1', label: 'First item' }]}
+      data={initialData}
       min={1}
       max={4}
       slots={{

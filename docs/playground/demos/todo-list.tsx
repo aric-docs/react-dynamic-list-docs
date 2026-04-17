@@ -73,16 +73,18 @@ const Controls = () => {
   );
 };
 
+const initialData = [
+  { id: '1', title: 'Learn React', done: false },
+  { id: '2', title: 'Build something', done: true },
+];
+
 export default () => (
   <div className="debug-red p-2">
     <Controls />
     <DynamicList<Todo>
       name="pg-todo"
       defaults={defaults}
-      data={[
-        { id: '1', title: 'Learn React', done: false },
-        { id: '2', title: 'Build something', done: true },
-      ]}
+      data={initialData}
       max={8}
       slots={{
         item: TodoItem,
