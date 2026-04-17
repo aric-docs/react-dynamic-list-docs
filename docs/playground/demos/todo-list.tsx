@@ -74,7 +74,7 @@ const Controls = () => {
 };
 
 export default () => (
-  <div className="border border-red-500">
+  <div className="debug-red p-2">
     <Controls />
     <DynamicList<Todo>
       name="pg-todo"
