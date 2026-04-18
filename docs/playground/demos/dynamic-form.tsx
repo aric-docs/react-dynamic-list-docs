@@ -39,7 +39,7 @@ const initialData = [
 
 export default () => {
   const { state, actions } = useCommand<Field>('pg-form', { defaults, max: 8 });
-  const { add, reset } = actions;
+  const { add, set } = actions;
   const { canAdd, list } = state;
   return (
     <div className="space-y-2">
@@ -47,7 +47,7 @@ export default () => {
         <button onClick={add} disabled={!canAdd} className="px-3 py-1 bg-blue-500 text-white rounded text-sm disabled:opacity-40">
           + Add Field
         </button>
-        <button onClick={() => reset(initialData)} className="px-3 py-1 bg-gray-200 rounded text-sm">
+        <button onClick={() => set(initialData)} className="px-3 py-1 bg-gray-200 rounded text-sm">
           Reset
         </button>
       </div>

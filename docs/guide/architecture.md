@@ -51,12 +51,12 @@ Declarative wrapper combining `useCommand` + `@jswork/react-list` for slot-based
 ## Types
 
 ```ts
-type ListAction = 'add' | 'remove' | 'update' | 'reset';
+type ListAction = 'add' | 'remove' | 'update' | 'set' | 'up' | 'down';
 
 interface ChangeEvent<T> {
   action: ListAction;
   data: T[]; // full list after mutation
-  index?: number; // affected index (undefined for reset)
+  index?: number; // affected index (undefined for set)
 }
 
 interface ListState<T> {
@@ -70,7 +70,9 @@ interface ListActions<T> {
   add: () => void;
   remove: (index: number) => void;
   update: (index: number, updater: (prev: T) => T) => void;
-  reset: (items: T[]) => void;
+  set: (items: T[]) => void;
+  up: (index: number) => void;
+  down: (index: number) => void;
 }
 
 interface ListApi<T> {
@@ -82,7 +84,7 @@ interface ListApi<T> {
 ## Important Notes
 
 - `ChangeEvent.data` contains the **full list after mutation**, not the delta
-- `ChangeEvent.index` is `undefined` for `reset` actions
+- `ChangeEvent.index` is `undefined` for `set` actions
 - The store is global and lives for the module's lifetime — tests can import `setList` directly from `store.ts` to reset in `beforeEach`
 - `min`/`max` are soft constraints enforced at the hook level — direct store calls bypass them
 - All components using the same `name` share the same list data and react to each other's mutations

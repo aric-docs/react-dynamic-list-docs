@@ -22,7 +22,7 @@ const FruitItem = ({ item, index }: any) => {
 
 export default () => {
   const { state, actions } = useCommand<{ id: string; value: string }>('pg-string', { defaults, max: 8 });
-  const { add, reset } = actions;
+  const { add, set } = actions;
   const { canAdd, list } = state;
   return (
     <div className="space-y-2">
@@ -30,7 +30,7 @@ export default () => {
         <button onClick={add} disabled={!canAdd} className="px-3 py-1 bg-blue-500 text-white rounded text-sm disabled:opacity-40">
           + Add Fruit
         </button>
-        <button onClick={() => { fruitIdx = 0; reset([]); }} className="px-3 py-1 bg-gray-200 rounded text-sm">
+        <button onClick={() => { fruitIdx = 0; set([]); }} className="px-3 py-1 bg-gray-200 rounded text-sm">
           Reset
         </button>
       </div>

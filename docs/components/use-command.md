@@ -40,12 +40,14 @@ Returns `{ state, actions }` — state is reactive data, actions are imperative 
 
 ### `actions`
 
-| Field    | Type                                               | Description                  |
-| -------- | -------------------------------------------------- | ---------------------------- |
-| `add`    | `() => void`                                       | Append item via `defaults()` |
-| `remove` | `(index: number) => void`                          | Remove item at index         |
-| `update` | `(index: number, updater: (prev: T) => T) => void` | Update item at index         |
-| `reset`  | `(items: T[]) => void`                             | Replace entire list          |
+| Field    | Type                                               | Description                                |
+| -------- | -------------------------------------------------- | ------------------------------------------ |
+| `add`    | `() => void`                                       | Append item via `defaults()`               |
+| `remove` | `(index: number) => void`                          | Remove item at index                       |
+| `update` | `(index: number, updater: (prev: T) => T) => void` | Update item at index                       |
+| `set`    | `(items: T[]) => void`                             | Replace entire list                        |
+| `up`     | `(index: number) => void`                          | Move item at index up (swap with previous) |
+| `down`   | `(index: number) => void`                          | Move item at index down (swap with next)   |
 
 ## Example
 
@@ -76,3 +78,4 @@ function MyControls() {
 - Shares the same store as `<DynamicList>` when using the same `name`
 - `defaults` is required — it is a factory function `() => T`, not a value
 - `canAdd` / `canRemove` are derived from `min` / `max` constraints
+- `up(index)` swaps item with previous, `down(index)` swaps with next — no-op at boundaries

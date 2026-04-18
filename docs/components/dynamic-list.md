@@ -43,9 +43,9 @@ import { DynamicList } from '@jswork/react-dynamic-list';
 
 ```ts
 interface ChangeEvent<T> {
-  action: 'add' | 'remove' | 'update' | 'reset';
+  action: 'add' | 'remove' | 'update' | 'set' | 'up' | 'down';
   data: T[]; // full list after mutation
-  index?: number; // affected index (undefined for reset)
+  index?: number; // affected index (undefined for set)
 }
 ```
 
