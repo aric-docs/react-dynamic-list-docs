@@ -10,33 +10,24 @@ order: 1
 ```
 ┌─────────────┐     ┌──────────┐     ┌──────────┐
 │ DynamicList  │────▶│  Store   │◀────│useCommand│
-│ (component)  │     │ (global) │     │  (hook)  │
+│ (component)  │     │(internal)│     │  (hook)  │
 └─────────────┘     └────┬─────┘     └──────────┘
                          │
                     ┌────▼─────┐
                     │  Event   │
-                    │ (pub/sub)│
+                    │(internal)│
                     └──────────┘
 ```
 
 ## Core Modules
 
-### Store (`store.ts`)
+### Store (`store.ts`) — Internal
 
-Module-scoped `Map<string, unknown[]>` holding list data outside the React tree. Provides direct access functions:
+Module-scoped `Map<string, unknown[]>` holding list data outside the React tree. Not exported from public API.
 
-- `getList(name)` — Read list from store
-- `setList(name, items)` — Replace list and notify
-- `addToList(name, item)` — Append and notify
-- `removeAt(name, index)` — Remove at index and notify
-- `updateAt(name, index, updater)` — Update at index and notify
+### Event (`event.ts`) — Internal
 
-### Event (`event.ts`)
-
-Name-keyed pub/sub system for reactive cross-component propagation:
-
-- `subscribe(name, listener)` — Subscribe to changes, returns unsubscribe function
-- `emitChange(name, action, index?)` — Emit a change event
+Name-keyed pub/sub for reactive cross-component propagation. Not exported from public API.
 
 ### useCommand (`use-command.ts`)
 
@@ -92,6 +83,6 @@ interface ListApi<T> {
 
 - `ChangeEvent.data` contains the **full list after mutation**, not the delta
 - `ChangeEvent.index` is `undefined` for `reset` actions
-- The store is global and lives for the module's lifetime — call `setList(name, [])` in test `beforeEach` to reset
+- The store is global and lives for the module's lifetime — tests can import `setList` directly from `store.ts` to reset in `beforeEach`
 - `min`/`max` are soft constraints enforced at the hook level — direct store calls bypass them
 - All components using the same `name` share the same list data and react to each other's mutations
